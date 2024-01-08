@@ -1,0 +1,64 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "yac",
+  "title": "yac",
+  "description": "yet another copilot",
+  "icon": "command-icon.png",
+  "author": "vophan",
+  "categories": [
+    "Productivity"
+  ],
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "fix-grammer-and-improve-writing",
+      "title": "Fix grammer and improve writing",
+      "icon": "command-icon.png",
+      "description": "fix your grammer and improve writing",
+      "mode": "view"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.64.5",
+    "langchain": "^0.1.1"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.6",
+    "@types/node": "20.8.10",
+    "@types/react": "18.2.27",
+    "eslint": "^8.51.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "publish": "npx @raycast/api@latest publish"
+  },
+  "preferences": [
+    {
+      "name": "apiToken",
+      "title": "API Token",
+      "description": "OpenAI API Token",
+      "type": "password",
+      "required": true
+    },
+    {
+      "name": "model",
+      "title": "model",
+      "description": "model name",
+      "type": "textfield",
+      "required": true
+    },
+    {
+      "name": "baseURL",
+      "title": "OpenAI Base URL",
+      "description": "OpenAI Base URL",
+      "type": "textfield",
+      "required": false,
+      "default": "https://api.openai.com/v1"
+    }
+  ]
+}

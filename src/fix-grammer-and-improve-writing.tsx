@@ -1,4 +1,4 @@
-import { Action, ActionPanel, Detail, Toast, getSelectedText, preferences, showToast } from "@raycast/api";
+import { Action, ActionPanel, Detail, LaunchProps, Toast, getSelectedText, preferences, showToast } from "@raycast/api";
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import { useEffect, useState } from 'react';
 
@@ -13,13 +13,17 @@ const model = new ChatOpenAI({
     }
 });
 
-function ImproveWritingComponent() {
+function ImproveWritingComponent(props: LaunchProps<{ arguments: { content: string; }}>) {
     const [improved, setImproved] = useState('');
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         async function improveWriting() {
             try {
-                const text = await getSelectedText();
+                let text = props.arguments.content;
+                if (!text) {
+                    text = await getSelectedText();
+                }
+
                 setLoading(true)
                 const response = await model.stream(`Please improve the grammar and authenticity of the following sentence, Return only the improved sentence without any explanations, tags, or quotes. For example, if given "I am good boys", you should return "I am a good boy. Now improve: ${text}"`);
                 for await (const line of response) {

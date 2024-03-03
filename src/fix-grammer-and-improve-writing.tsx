@@ -13,9 +13,7 @@ const model = new ChatOpenAI({
     },
 });
 
-function ImproveWritingComponent(props: LaunchProps<{ arguments: { content: string } }>) {
-    const targetLang = "English";
-
+function ImproveWritingComponent(props: LaunchProps<{ arguments: { content: string, language: string } }>) {
     const [improved, setImproved] = useState("");
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -26,15 +24,21 @@ function ImproveWritingComponent(props: LaunchProps<{ arguments: { content: stri
                     text = await getSelectedText();
                 }
 
+                let targetLang = props.arguments.language;
+                if (!targetLang) {
+                    targetLang = "English";
+                }
+
                 setLoading(true);
                 const response = await model.stream(`
                     Please improve the grammar and authenticity of the following sentence, 
                     Return only the improved sentence without any explanations, tags, or quotes. 
                     If what i given is not ${targetLang}, translate it into ${targetLang} at first. 
-                    For example, 
-                    if given "I am good boys", you should return "I am a good boy".
-                    if given "我是一个好男孩", you should return "I am a good boy". 
                     Now improve: ${text}"`);
+
+                    // For example, 
+                    // if given "I am good boys", you should return "I am a good boy".
+                    // if given "我是一个好男孩", you should return "I am a good boy". 
                 for await (const line of response) {
                     console.log(line.content.toString());
                     setImproved((prev) => prev + line.content.toString());

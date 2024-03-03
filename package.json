@@ -18,10 +18,16 @@
             "mode": "view",
             "arguments": [
                 {
+                    "name": "language",
+                    "type": "text",
+                    "required": false,
+                    "placeholder": "target language"
+                },
+                {
                     "name": "content",
                     "type": "text",
                     "required": false,
-                    "placeholder": "input the content or just get the selected"
+                    "placeholder": "content"
                 }
             ]
         }
